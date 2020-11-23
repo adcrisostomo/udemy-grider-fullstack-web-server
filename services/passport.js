@@ -1,6 +1,9 @@
 const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
 const keys = require('../config/keys')
+const mongoose = require('mongoose')
+
+const User = mongoose.model('users')
 
 passport.use( // authenticate using Google OAuth
     new GoogleStrategy(
@@ -11,9 +14,9 @@ passport.use( // authenticate using Google OAuth
         },
         // eslint-disable-next-line no-unused-vars
         (accessToken, refreshToken, profile, done) => {
-            console.log('access token:', accessToken)
-            console.log('refresh token:', refreshToken)
-            console.log('profile:', profile)
+            new User({ // create new user record and save into mongodb
+                googleId: profile.id
+            }).save()
         }
     )
 )
