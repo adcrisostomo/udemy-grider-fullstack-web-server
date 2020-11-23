@@ -9,6 +9,7 @@ passport.use( // authenticate using Google OAuth
             clientSecret: keys.googleClientSecret,
             callbackURL: '/auth/google/callback'
         },
+        // eslint-disable-next-line no-unused-vars
         (accessToken, refreshToken, profile, done) => {
             console.log('access token:', accessToken)
             console.log('refresh token:', refreshToken)
