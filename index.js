@@ -4,6 +4,7 @@ const keys = require('./config/keys')
 const app = express()
 require('./services/passport')
 require('./routes/authRoutes')(app)
+require('./models/User')
 
 mongoose.connect(keys.mongoURI) // connect mongoose to my Mongo db
 
