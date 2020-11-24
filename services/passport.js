@@ -21,30 +21,31 @@ passport.use( // authenticate using Google OAuth
         {
             clientID: keys.googleClientID,
             clientSecret: keys.googleClientSecret,
-            callbackURL: '/auth/google/callback'
+            callbackURL: '/auth/google/callback',
+            proxy: true
         },
         // eslint-disable-next-line no-unused-vars
-        (accessToken, refreshToken, profile, done) => {
-            User.findOne({ // check if it is an existing user
+        async (accessToken, refreshToken, profile, done) => {
+            const existingUser = await User.findOne({ // check if it is an existing user
                 gooogleId: profile.id
-            }).then(existingUser => {
-                if (existingUser) {
-                    // we already have a record with the given profile ID...
-                    // ...skip
-                    done(
-                        null, // "no error!"
-                        existingUser // "here is the existing user"
-                    )
-                } else {
-                    // we don't have an existing record...
-                    // ...make a new record
-                    new User({ // create new user record and save into mongodb
-                        googleId: profile.id
-                    }).save().then(user =>
-                        done(null, user)
-                    )
-                }
             })
+
+            if (existingUser) {
+                // we already have a record with the given profile ID...
+                // ...skip
+                return done(
+                    null, // "there's no error!"
+                    existingUser // "here is the existing user, take it"
+                )
+            }
+
+            // we don't have an existing record...
+            // ...make a new record
+            const user = await new User({ // create new user record and save into mongodb
+                googleId: profile.id
+            }).save()
+
+            done(null, user)
         }
     )
 )
