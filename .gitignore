@@ -103,5 +103,4 @@ dist
 # TernJS port file
 .tern-port
 
-.google-secret.txt
-keys.js
+dev.js

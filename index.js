@@ -10,20 +10,19 @@ require('./models/User')
 
 require('./services/passport')
 
-// load routes using app
-require('./routes/authRoutes')(app)
-
-// prep cookie properties
+// prep cookie properties and session handling via passport
+// THIS MUST BE DONE BEFORE LOADING ROUTES
 app.use(
     cookieSession({
         maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
         keys: [keys.cookieKey]
     })
 )
-
-// prep session handling via passport
 app.use(passport.initialize())
 app.use(passport.session())
+
+// load routes using app
+require('./routes/authRoutes')(app)
 
 // connect mongoose to my Mongo db
 mongoose.connect(keys.mongoURI)

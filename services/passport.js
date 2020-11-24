@@ -40,7 +40,7 @@ passport.use( // authenticate using Google OAuth
                     // ...make a new record
                     new User({ // create new user record and save into mongodb
                         googleId: profile.id
-                    }).save().then(user => 
+                    }).save().then(user =>
                         done(null, user)
                     )
                 }
