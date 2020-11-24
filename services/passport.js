@@ -21,7 +21,8 @@ passport.use( // authenticate using Google OAuth
         {
             clientID: keys.googleClientID,
             clientSecret: keys.googleClientSecret,
-            callbackURL: '/auth/google/callback'
+            callbackURL: '/auth/google/callback',
+            proxy: true
         },
         // eslint-disable-next-line no-unused-vars
         (accessToken, refreshToken, profile, done) => {
