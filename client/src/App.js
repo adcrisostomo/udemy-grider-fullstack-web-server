@@ -8,7 +8,7 @@ function App() {
         <img src={logo} className='App-logo' alt='logo' />
         <a
           // set relative path...
-          // ...let setupProxy.js append domain to this path
+          // ...let setupProxy.js append server's domain to this path
           href='/auth/google'
         >
           Sign in with Google
