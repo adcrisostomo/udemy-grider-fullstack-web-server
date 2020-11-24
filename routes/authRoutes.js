@@ -12,4 +12,8 @@ module.exports = (app) => { // prep this anonymous function for exporting
         '/auth/google/callback',
         passport.authenticate('google')
     )
+
+    app.get('/api/current-user', (req, res) => {
+        res.send(req.user)
+    })
 }
