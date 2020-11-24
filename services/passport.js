@@ -34,7 +34,7 @@ passport.use( // authenticate using Google OAuth
                 // we already have a record with the given profile ID...
                 // ...skip
                 return done(
-                    null, // "no error!"
+                    null, // "there's no error!"
                     existingUser // "here is the existing user, take it"
                 )
             }
