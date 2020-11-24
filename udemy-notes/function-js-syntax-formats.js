@@ -23,6 +23,7 @@
 // async-await arrow function format
 const fetchAlbums = async () => {
     // make code into synchronous nature
+    // eslint-disable-next-line no-undef
     const res = await fetch('http://rallycoding.herokuapp.com/api/music_albums')
     const json = await res.json()
 
