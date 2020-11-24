@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux' // this is the super parent of all Components
 import { createStore, applyMiddleware } from 'redux'
 import App from './components/App'
+import reducers from './reducers'
 
 const store = createStore(() => [], {}, applyMiddleware())
 
