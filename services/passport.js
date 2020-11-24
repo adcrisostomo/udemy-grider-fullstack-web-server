@@ -16,16 +16,22 @@ passport.use( // authenticate using Google OAuth
         (accessToken, refreshToken, profile, done) => {
             User.findOne({ // check if it is an existing user
                 gooogleId: profile.id
-            }).then((existingUser) => {
+            }).then(existingUser => {
                 if (existingUser) {
                     // we already have a record with the given profile ID...
                     // ...skip
+                    done(
+                        null, // "no error!"
+                        existingUser // "here is the existing user"
+                    )
                 } else {
                     // we don't have an existing record...
                     // ...make a new record
                     new User({ // create new user record and save into mongodb
                         googleId: profile.id
-                    }).save()
+                    }).save().then(user => 
+                        done(null, user)
+                    )
                 }
             })
         }
