@@ -14,9 +14,20 @@ passport.use( // authenticate using Google OAuth
         },
         // eslint-disable-next-line no-unused-vars
         (accessToken, refreshToken, profile, done) => {
-            new User({ // create new user record and save into mongodb
-                googleId: profile.id
-            }).save()
+            User.findOne({ // check if it is an existing user
+                gooogleId: profile.id
+            }).then((existingUser) => {
+                if (existingUser) {
+                    // we already have a record with the given profile ID...
+                    // ...skip
+                } else {
+                    // we don't have an existing record...
+                    // ...make a new record
+                    new User({ // create new user record and save into mongodb
+                        googleId: profile.id
+                    }).save()
+                }
+            })
         }
     )
 )
