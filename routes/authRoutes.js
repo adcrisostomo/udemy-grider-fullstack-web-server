@@ -13,6 +13,11 @@ module.exports = (app) => { // prep this anonymous function for exporting
         passport.authenticate('google')
     )
 
+    app.get('/api/logout', (req, res) => {
+        req.logout()
+        res.send(req.user) // proof of successful logout
+    })
+
     app.get('/api/current-user', (req, res) => {
         res.send(req.user)
     })
