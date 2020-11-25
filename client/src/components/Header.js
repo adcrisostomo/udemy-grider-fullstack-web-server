@@ -1,6 +1,30 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux' // allows Components to use action creators
 
 class Header extends Component {
+    renderContent () { // determine which Header content should be displayed based on auth's value
+        switch (this.props.auth) {
+            case null: // the Component is still checking if user is logged in or not
+                return
+            case false: // the Component finds user is logged out
+                return (
+                    <li>
+                        <a href='/auth/google'>
+                            Login with Google
+                        </a>
+                    </li>
+                )
+            default: // the Component finds user is logged in
+                return  (
+                    <li>
+                        <a href='/api/logout'>
+                            Logout
+                        </a>
+                    </li>
+                )
+        }
+    }
+
     render () {
         return (
             <nav>
@@ -9,9 +33,7 @@ class Header extends Component {
                         Emaily
                     </a>
                     <ul className='right'>
-                        <li>
-                            <a>Login with Google</a>
-                        </li>
+                        { this.renderContent() }
                     </ul>
                 </div>
             </nav>
@@ -19,4 +41,9 @@ class Header extends Component {
     }
 }
 
-export default Header
+function mapStateToProps ({ auth }) {
+    return { auth }
+}
+
+// connect auth reducer to Header as its props
+export default connect(mapStateToProps)(Header)
