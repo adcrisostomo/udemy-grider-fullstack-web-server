@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux' // allows Components to use action creators
+import { Link } from 'react-router-dom'
 
 class Header extends Component {
     renderContent () { // determine which Header content should be displayed based on auth's value
@@ -29,9 +30,12 @@ class Header extends Component {
         return (
             <nav>
                 <div className='nav-wrapper'>
-                    <a className='left brand-logo'>
+                    <Link
+                        to={this.props.auth ? '/surveys' : '/'}
+                        className='left brand-logo'
+                    >
                         Emaily
-                    </a>
+                    </Link>
                     <ul className='right'>
                         { this.renderContent() }
                     </ul>
