@@ -29,7 +29,7 @@ module.exports = app => {
                 body,
                 recipients: recipients.split(',')
                                 .map(email =>
-                                    ({ email }) // makes clear that we are returning a shortened object
+                                    ({ email: email.trim() }) // makes clear that we are returning an object
                                 ),
                 _user: req.user.id,
                 dateSent: Date.now(),
