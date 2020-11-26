@@ -1,6 +1,5 @@
 // 1) instead of requiring directly from /models/Survey.js...
 const mongoose = require('mongoose')
-const keys = require('../config/keys')
 const requireLogin = require('../middlewares/requireLogin')
 const requireCredits = require('../middlewares/requireCredits')
 
