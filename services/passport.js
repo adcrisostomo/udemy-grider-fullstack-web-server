@@ -29,6 +29,7 @@ passport.use( // authenticate using Google OAuth
             const existingUser = await User.findOne({ // check if it is an existing user
                 googleId: profile.id
             })
+
             if (existingUser) {
                 // we already have a record with the given profile ID...
                 // ...skip

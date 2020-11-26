@@ -8,6 +8,7 @@ const app = express()
 
 // load mongo models first before loading passport service
 require('./models/User')
+require('./models/Survey')
 
 require('./services/passport')
 
