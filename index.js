@@ -16,7 +16,7 @@ require('./services/passport')
 // ... then assign to req.body
 app.use(bodyParser.json())
 // prep cookie properties and session handling via passport
-// THIS MUST BE DONE BEFORE LOADING ROUTES
+// !!! THIS MUST BE DONE BEFORE LOADING ROUTES !!!
 app.use(
     cookieSession({
         maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
@@ -29,6 +29,7 @@ app.use(passport.session())
 // load routes using app
 require('./routes/authRoutes')(app)
 require('./routes/billingRoutes')(app)
+require('./routes/surveyRoutes')(app)
 
 if (process.env.NODE_ENV === 'production') {
     // Express will serve up prod assets...
