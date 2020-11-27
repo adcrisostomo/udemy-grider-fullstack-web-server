@@ -2,10 +2,12 @@
 const mongoose = require('mongoose')
 const requireLogin = require('../middlewares/requireLogin')
 const requireCredits = require('../middlewares/requireCredits')
+const surveyTemplate = require('../services/emailTemplates/surveyTemplate')
 
 // ...2) take this approach to successfully run tests with any mongo model...
 // ...without encountering errors e.g. "Imported too many times" 
 const Survey = mongoose.model('surveys')
+const Mailer = require('../services/Mailer')
 
 module.exports = app => {
     // check if user is logged in first...
@@ -33,6 +35,9 @@ module.exports = app => {
                 _user: req.user.id,
                 dateSent: Date.now(),
             })
+
+            // use survey to send email(s)
+            const mailer = new Mailer(survey, surveyTemplate(survey))
         }
     )
 }
