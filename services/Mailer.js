@@ -51,7 +51,7 @@ class Mailer extends helper.Mail {
         })
 
         // send request
-        const response = await this.sgApi.API(request)
+        const response = this.sgApi.API(request)
         
         return response
     }

@@ -38,6 +38,8 @@ module.exports = app => {
 
             // use survey to send email(s)
             const mailer = new Mailer(survey, surveyTemplate(survey))
+
+            mailer.send()
         }
     )
 }
