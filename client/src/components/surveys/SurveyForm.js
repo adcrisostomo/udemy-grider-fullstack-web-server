@@ -5,17 +5,11 @@ import { reduxForm, Field } from 'redux-form'
 import { Link } from 'react-router-dom'
 import SurveyField from './SurveyField'
 import validateEmails from '../../utils/validateEmails'
-
-const FIELDS = [
-    { label: 'Survey Title', name: 'title', errorMessage: 'Please provide a survey title' },
-    { label: 'Subject Line', name: 'subject', errorMessage: 'Please provide a subject' },
-    { label: 'Email Body', name: 'body', errorMessage: 'Please provide an email body' },
-    { label: 'Recipient List', name: 'emails', errorMessage: 'Please provide at least one (1) email address' },
-]
+import formFields from './formFields'
 
 class SurveyForm extends Component {
     renderFields () {
-        return _.map(FIELDS, ({ label, name }) => {
+        return _.map(formFields, ({ label, name }) => {
             return  <Field
                 component={SurveyField}
                 type='text'
@@ -30,7 +24,7 @@ class SurveyForm extends Component {
         return (
             <div>
                 <form
-                    onSubmit={this.props.handleSubmit(values => console.log(values))}
+                    onSubmit={this.props.handleSubmit(this.props.onSurveySubmit)}
                 >
                     { this.renderFields() }
                     <Link
@@ -56,7 +50,7 @@ function validate (values) {
 
     errors.emails = validateEmails(values.emails || '')
 
-    _.each(FIELDS, ({ name, errorMessage }) => {
+    _.each(formFields, ({ name, errorMessage }) => {
         if (!values[name]) {
             errors[name] = errorMessage
         }
@@ -67,5 +61,6 @@ function validate (values) {
 
 export default reduxForm({
     validate,
-    form: 'surveyForm'
+    form: 'surveyForm',
+    destroyOnUnmount: false // retain form values even after changing component contents or routes
 })(SurveyForm)
