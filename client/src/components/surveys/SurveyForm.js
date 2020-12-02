@@ -48,7 +48,7 @@ class SurveyForm extends Component {
 function validate (values) {
     const errors = {}
 
-    errors.emails = validateEmails(values.emails || '')
+    errors.recipients = validateEmails(values.recipients || '')
 
     _.each(formFields, ({ name, errorMessage }) => {
         if (!values[name]) {
@@ -62,5 +62,6 @@ function validate (values) {
 export default reduxForm({
     validate,
     form: 'surveyForm',
-    destroyOnUnmount: false // retain form values even after changing component contents or routes
+    // retain form values even after changing component contents or routes
+    destroyOnUnmount: false
 })(SurveyForm)
