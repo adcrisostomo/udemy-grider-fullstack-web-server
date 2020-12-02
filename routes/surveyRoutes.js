@@ -10,14 +10,6 @@ const Survey = mongoose.model('surveys')
 const Mailer = require('../services/Mailer')
 
 module.exports = app => {
-    // show a page to thank user for...
-    // ...answering survey
-    app.get('/api/surveys/thanks',
-        (req, res) => {
-            res.send('Thanks for voting!')
-        }
-    )
-
     // check if user is logged in first...
     // ...THEN check if user has at least 1 credit...
     // ...before proceeding with the request
@@ -57,6 +49,19 @@ module.exports = app => {
             } catch (e) {
                 res.status(422).send(e)
             }
+        }
+    )
+
+    app.post('/api/surveys/webhooks', (req, res) => {
+        console.log('REQ.BODY:', req.body)
+        res.send({})
+    })
+
+    // show a page to thank user for...
+    // ...answering survey
+    app.get('/api/surveys/thanks',
+        (req, res) => {
+            res.send('Thanks for voting!')
         }
     )
 }
