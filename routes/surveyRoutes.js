@@ -92,6 +92,15 @@ module.exports = app => {
         res.send({})
     })
 
+    app.get('/api/surveys', requireLogin, async (req, res) => { 
+        // retrieve Surveys excluding Recipients sub-document...
+        // ...to avoid retrieving 1000s or 10000s of Recipients
+        const surveys = await Survey.find({ _user: req.user.id })
+            .select({ recipients: false })
+
+        res.send(surveys)
+    })
+
     // show a page to thank user for...
     // ...answering survey
     app.get('/api/surveys/:surveyId/:choice',
