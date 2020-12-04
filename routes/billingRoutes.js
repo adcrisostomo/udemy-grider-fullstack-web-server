@@ -1,8 +1,9 @@
 const keys = require('../config/keys')
 const stripe = require('stripe')(keys.stripeSecretKey)
+const requireLogin = require('../middlewares/requireLogin')
 
 module.exports = app => {
-    app.post('/api/stripe',
+    app.post('/api/stripe', requireLogin,
         async (req, res) => {
             // prep to charge user 5 dollars
             const charge = await stripe.charges.create({
@@ -12,7 +13,11 @@ module.exports = app => {
                 source: req.body.id
             })
 
-            console.log('charge:', charge)
+            // update credits and save user instance to db
+            req.user.credits += 5
+            const user = await req.user.save()
+
+            res.send(user)
         }
     )
 }
